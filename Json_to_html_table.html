@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+    $("#demo").hide()
+    $("#b1").click(function(){
+    	
+    	var table = document.getElementById("tab1");
+    	var JsonString=$("#JsonText").val();
+    	var obj = JSON.parse(JsonString);
+    	console.log(obj);
+    	key=Object.keys(obj);
+    	console.log(key);
+    	len=key.length;
+        var flag=0;    	
+    	var tr;
+    	
+    	for (var k in obj)
+    	{	
+            var count=0;
+    		
+            if("object"==typeof(obj[k]))              // 1st object
+            {    
+    			 for(var ck in obj[k])
+    			 {
+    				if("object"==typeof(obj[k][ck]))   //  2nd object
+    				{
+                        for(var cck in obj[k][ck])
+                        { 
+                            if("object"==typeof(obj[k][ck][cck])) //3rd object
+                            {
+
+                                for(var ccck in obj[k][ck][cck])
+                                { 
+                                    if("object"==typeof(obj[k][ck][cck][ccck])) //4rd object
+                                    {
+                                        for(var kc in obj[k][ck][cck][ccck])
+                                        {
+                                            if("object"==typeof(obj[k][ck][cck][ccck][ck])) 
+                                            {
+                                               flag=1;
+
+                                            }    
+
+                                        }
+
+                                         count=count+1;
+                                    }
+                                   
+                    
+
+                                    console.log(obj[k][ck][cck][ccck]);
+                                }
+
+                                count=count+1;
+                            }
+                            
+
+                            console.log(obj[k][ck][cck]);
+
+                        }
+
+    					count=count+1;
+    				}
+                   
+
+    			 }
+
+    			count=count+1;
+    			
+    		}
+
+            
+  		
+
+        if (count>4)
+        {
+
+            flag=1;
+        }
+
+		}
+
+		  			
+  
+    	if(flag==1)
+    	{
+    	   console.log("count="+count);
+            var row = table.insertRow(r);
+            var cell1 = row.insertCell(0); 
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = "Corrupted ";
+            cell2.innerHTML = "JSON Format";
+            r++;
+
+        }
+    	else
+    	{
+            console.log("count="+count);
+
+    		var r=1;	
+  			    for (var k in obj)
+    		    {	
+    			        if("object"==typeof(obj[k]))   //1st object
+    			        {    
+    				        for(var ck in obj[k])
+    			 	        {
+                                if("object"==typeof(obj[k][ck])) //2nd object
+                                {
+                                    for(var cck in obj[k][ck])
+                                    {                            
+                                        if("object"==typeof(obj[k][ck][cck])) //3rd object  
+                                        {
+                                            for(var ccck in obj[k][ck][cck])
+                                            {
+                                                if("object"==typeof(obj[k][ck][cck][ccck])) //4th object
+                                                {
+                                                    for(var cccck in obj[k][ck][cck][ccck])
+                                                    {
+                                                      
+                                                        if("object"==typeof(obj[k][ck][cck][ccck][cccck]))
+                                                        {
+
+                                                        }
+                                                        else
+                                                        {
+                                                            var row = table.insertRow(r);
+                                                            var cell1 = row.insertCell(0);
+                                                            var cell2 = row.insertCell(1);
+                                                            cell1.innerHTML = k+"."+ck+"."+cck+"."+ccck+"."+cccck;
+                                                            cell2.innerHTML = obj[k][ck][cck][ccck][cccck];
+                                                            r++;
+                                                            console.log("****"+obj[k][ck][cck][ccck][cccck]);
+                                                        }
+                                                    }
+                                                    
+
+                                                }
+                                                else
+                                                {
+                                                    var row = table.insertRow(r);
+                                                    var cell1 = row.insertCell(0);
+                                                    var cell2 = row.insertCell(1);
+                                                    cell1.innerHTML = k+"."+ck+"."+cck+"."+ccck;
+                                                    cell2.innerHTML = obj[k][ck][cck][ccck];
+                                                    r++;
+                                                    
+                                                }
+                                                    //4th object clear
+                                            } 
+
+                                        }
+                                        else
+                                        {
+                                            var row = table.insertRow(r);
+                                            var cell1 = row.insertCell(0);
+                                            var cell2 = row.insertCell(1);
+                                            cell1.innerHTML = k+"."+ck+"."+cck;
+                                            cell2.innerHTML = obj[k][ck][cck];
+                                            r++;
+                                        }
+                                        // 3rd object clear
+                                    }
+
+                                }
+                                else
+                                {
+                                    var row = table.insertRow(r);
+                                    var cell1 = row.insertCell(0);
+                                    var cell2 = row.insertCell(1);
+                                    cell1.innerHTML = k+"."+ck;
+                                    cell2.innerHTML = obj[k][ck];
+                                    r++;
+                                }
+                                //2nd object clear
+                            }
+
+                        }	   					
+                		else
+    		            {
+    				        var row = table.insertRow(r);
+    				        var cell1 = row.insertCell(0);
+    				        var cell2 = row.insertCell(1);
+    				        cell1.innerHTML = k;
+    				        cell2.innerHTML = obj[k];
+    	       		        r++;
+    		            }
+
+    	        }	
+        }
+ 
+       
+    });
+});
+</script>
+<style>
+td,th{
+	padding:10px;
+	spacing:2px;
+	align:center;
+
+}
+textarea.add {
+    resize: none;
+}
+</style>
+</head>
+<body>
+
+<div class="row" style="border: 1px solid black;margin:40px 5px 5px 5px;">
+	<div class="col-sm-6"  style="margin:10px 0px 0px 5px;">
+	<b>Input:</b><br>
+	<textarea class="add" rows=15 cols=50 id="JsonText" ></textarea>
+	<button id="b1">JSON TO HTML TABLE</button>
+</div>
+	<div class="col-sm-5" style="margin:10px 0px 0px 10px;">
+	<b>Output:</b>
+	<p id="demo">
+		<table border=1 id="tab1">
+			<tr><th>KEYS</th>
+				<th>VALUES</th>
+			</tr>
+
+		</table>
+
+	</p></div>
+</div>
+
+
+
+</body>
+</html>
